@@ -1,0 +1,11 @@
+/EnglishTutorAI/EnglishTutorAI.csproj.user
+/.vs/
+/ClientApp/dist/
+/EnglishTutorAI/obj/
+/EnglishTutorAI/bin
+/EnglishTutorAI/ClientApp/dist
+/EnglishTutorAI/ClientApp/.angular
+/EnglishTutorAI/ClientApp/node_modules
+/EnglishTutorAI/ClientApp/package-lock.json
+/EnglishTutorAI/ClientApp/src/app/app.component.js.map
+/EnglishTutorAI/ClientApp/src/main.js.map
