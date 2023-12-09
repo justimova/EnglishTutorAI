@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace EnglishTutorAI.Model
 {
-	public class User
+	public class User : IdentityUser
 	{
-		public int Id { get; set; }
 		[MaxLength(250)]
-		public string? Name { get; set; }
+		public string? FirstName { get; set; }
 		[MaxLength(250)]
-		public string Email { get; set; } = null!;
-		[MaxLength(250)]
-		public string Password { get; set; } = null!;
+		public string? LastName { get; set; }
+		//[MaxLength(250)]
+		//public string Password { get; set; } = null!;
 	}
 }

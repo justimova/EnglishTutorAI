@@ -1,5 +1,6 @@
 using EnglishTutorAI.Model;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 string? connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
+
+builder.Services.AddIdentity<User, IdentityRole>()
+	.AddEntityFrameworkStores<ApplicationContext>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options => {
@@ -46,7 +50,7 @@ app.MapGet("/", async (ApplicationContext db) => await db.Users.ToListAsync());
 
 app.MapGet("/api/users", async (ApplicationContext db) => await db.Users.ToListAsync());
 
-app.MapGet("/api/users/{id:int}", async (int id, ApplicationContext db) => {
+app.MapGet("/api/users/{id:string}", async (string id, ApplicationContext db) => {
 	// получаем пользователя по id
 	User? user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
 
@@ -58,7 +62,7 @@ app.MapGet("/api/users/{id:int}", async (int id, ApplicationContext db) => {
 	return Results.Json(user);
 });
 
-app.MapDelete("/api/users/{id:int}", async (int id, ApplicationContext db) => {
+app.MapDelete("/api/users/{id:string}", async (string id, ApplicationContext db) => {
 	// получаем пользователя по id
 	User? user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
 
@@ -89,7 +93,7 @@ app.MapPut("/api/users", async (User userData, ApplicationContext db) => {
 
 	// если пользователь найден, изменяем его данные и отправляем обратно клиенту
 	user.Email = userData.Email;
-	user.Name = userData.Name;
+	user.FirstName = userData.FirstName;
 	await db.SaveChangesAsync();
 	return Results.Json(user);
 });

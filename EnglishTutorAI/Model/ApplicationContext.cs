@@ -14,7 +14,7 @@ public class ApplicationContext : DbContext
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		modelBuilder.Entity<User>().HasData(
-			new User { Id = 1, Name = "SuperAdmin", Email = "SuperAdmin@gmail.com", Password = "SuperAdmin" }
+			new User { UserName = "SuperAdmin", Email = "SuperAdmin@gmail.com" }
 		);
 	}
 }
