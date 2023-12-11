@@ -1,8 +1,7 @@
-﻿using System.Diagnostics.Metrics;
-using EnglishTutorAI.Model;
+﻿using EnglishTutorAI.Model;
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationContext : DbContext
+internal class ApplicationContext : DbContext
 {
 	public DbSet<User> Users { get; set; } = null!;
 
