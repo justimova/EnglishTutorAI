@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}">{{nameCompany}}</a>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="collapseNav" [collapse]="!isCollapsed" [isAnimated]="true">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/dashboard']" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/grammar']">Grammar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/reading']">Reading</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/writing']">Writing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/dictionary']">Dictionary</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/profile']">My Profile</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- <button mat-button [matMenuTriggerFor]="dashboardMenu">Dashboard</button> -->
+
+<!-- <mat-nav-list>
+  <a mat-list-item href="..." *ngFor="let link of links"> {{ link }} </a>
+</mat-nav-list> -->

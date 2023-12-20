@@ -38,9 +38,6 @@ if (app.Environment.IsDevelopment()) {
 	app.UseHsts();
 }
 app.UseStaticFiles();
-//if (!app.Environment.IsDevelopment()) {
-//	app.UseSpaStaticFiles();
-//}
 
 app.UseAuthentication();
 app.MapControllers();
@@ -71,7 +68,6 @@ app.UseEndpoints(endpoints => {
 	//});
 	app.UseSpa(spa => {
 		spa.Options.SourcePath = "ClientApp";
-
 		if (builder.Environment.IsDevelopment()) {
 			spa.UseAngularCliServer(npmScript: "start");
 		}
