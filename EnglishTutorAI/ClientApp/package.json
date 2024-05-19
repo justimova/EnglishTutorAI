@@ -21,7 +21,6 @@
     "@fortawesome/angular-fontawesome": "^0.10.2",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
-    "@syncfusion/ej2-angular-richtexteditor": "^25.2.4",
     "bootstrap": "^5.0.2",
     "font-awesome": "4.7",
     "jquery": "3.6",
