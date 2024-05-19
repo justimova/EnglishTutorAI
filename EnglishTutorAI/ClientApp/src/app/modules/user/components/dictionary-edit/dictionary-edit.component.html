@@ -1,0 +1,27 @@
+
+<div class="row">
+    <form #newForm="ngForm" novalidate="novalidate">
+        <div>
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="English word or phrase" [(ngModel)]="currentDictionary.text" name="text">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Transcription" [(ngModel)]="currentDictionary.transcript" name="transcript">
+            </div>
+            <div class="mb-3">
+                <textarea class="form-control" placeholder="Translation of word or phrase" [(ngModel)]="currentDictionary.translatedText" name="translatedText"></textarea>
+            </div>
+            <div class="mb-3">
+                <textarea class="form-control" rows="4" placeholder="Examples" [(ngModel)]="currentDictionary.examples" name="examples"></textarea>
+
+            </div>
+        </div>
+        <div class="control-panel-end">
+          <button class="btn btn-success mt-3" (click)="onSave()" [ngClass]="{ 'visually-hidden': isSaving }">Save</button>
+          <button class="btn btn-success mt-3" type="button" disabled [ngClass]="{ 'visually-hidden': !isSaving }">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Saving...
+          </button>
+        </div>
+      </form>
+</div>

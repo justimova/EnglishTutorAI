@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-xl-7 p-xl-2 p-3">
+        <div class="p-3 border bg-light rounded full-height-content shadow-sm bg-body" [ngClass]="{ 'text-center': isCurrentStoryLoading }">
+            <div class="spinner-border m-5 text-success" role="status" [ngClass]="{ 'visually-hidden': !isCurrentStoryLoading }">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <div [ngClass]="{ 'visually-hidden': isCurrentStoryLoading }">
+                <div class="lead">
+                    <span [ngClass]="{ 'visually-hidden': currentStory.status == 1 }">Let's read an interesting story or </span>
+                    <span [ngClass]="{ 'visually-hidden': currentStory.status != 1 }">
+                        Well done! Let's read one more story. You can choose some story from the list or </span>
+                    <a (click)="onCreateStory()" class="btn btn-link text-lg pt-0">create new one</a>
+                  </div>
+                <h2>{{currentStory.title}}</h2>
+                <div class="row" *ngFor="let par of currentStory.paragraphs; let i = index" [ngClass]="{'bg-success opacity-10': i % 2 == 0}">
+                    <div class="col-xl-6 p-2">{{par.text}}</div>
+                    <div class="col-xl-6 p-2">{{par.translatedText}}</div>
+                </div>
+                <div class="control-panel-end" [ngClass]="{ 'visually-hidden': currentStory.status == 1 }">
+                    <button class="btn btn-success mt-3" (click)="onDone()" [ngClass]="{ 'visually-hidden': isCurrentStorySaving }">Done</button>
+                    <button class="btn btn-success mt-3" type="button" disabled [ngClass]="{ 'visually-hidden': !isCurrentStorySaving }">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Saving...
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-5 p-xl-2 p-3">
+      <div class="p-3 border bg-light rounded-3 full-height-content shadow-sm bg-body">
+        <app-story-data-grid (editClick)="onEditStoryClick($event)" (viewClick)="onViewStoryClick($event)" (deleteClick)="onDeleteStoryClick($event)"
+            [refreshStoriesEvent]="refreshStoriesEvent" [currentStory]="currentStory">
+        </app-story-data-grid>
+        
+      </div>
+    </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast align-items-center bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                Story deleted successfully
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>

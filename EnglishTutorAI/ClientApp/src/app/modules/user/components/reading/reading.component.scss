@@ -1,0 +1,12 @@
+.bg-success {
+    background-color: rgba(45, 206, 137, 0.1) !important;
+}
+
+.control-panel-end {
+    justify-content: flex-end;
+    display: flex;
+}
+
+.full-height-content {
+    min-height: calc(100vh - 170px);
+}

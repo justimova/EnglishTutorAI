@@ -1,0 +1,52 @@
+
+<div class="row">
+    <div class="col-xl-7 p-xl-2 p-3">
+        <div class="p-3 border bg-light rounded-3 full-height-content shadow-sm bg-body">
+            <div class="row">
+                <form #newForm="ngForm" novalidate="novalidate">
+                    <div class="input-group mb-3">
+                        <button type="button" class="btn btn-success btn-sm" (click)="onAdd()">
+                            <i class="fa fa-plus-square-o text-lg opacity-10" aria-hidden="true"></i>
+                        </button>
+                        <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchText" name="search">
+                        <button class="btn btn-info" type="button" (click)="onSearch()">Search</button>
+
+                    </div>
+                </form>
+            </div>
+            <div class="spinner-border m-5 text-success" role="status" [ngClass]="{ 'visually-hidden': !isLoading }">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div [ngClass]="{ 'visually-hidden': isLoading || dictionaries.length > 0 }">No words</div>
+            <div class="row" *ngFor="let dictionary of dictionaries" [ngClass]="{ 'visually-hidden': isLoading || dictionaries.length <= 0 }">
+                <div class="col-xl-4 p-xl-2 p-3">
+                    <strong>{{dictionary.text}}</strong>
+                </div>
+                <div class="col-xl-6 p-xl-2 p-3">{{dictionary.translatedText}}</div>
+                <div class="col-xl-2 p-xl-2 p-3">
+                    <button type="button" class="btn btn-outline-info btn-sm" (click)="onView(dictionary)">
+                        <i class="fa fa-eye text-lg opacity-10" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-success btn-sm ms-1" (click)="onEdit(dictionary)">
+                        <i class="fa fa-pencil-square-o text-lg opacity-10" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-sm ms-1" (click)="onDelete(dictionary)">
+                        <i class="fa fa-trash-o text-lg opacity-10" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-5 p-xl-2 p-3">
+        <div class="p-3 border bg-light rounded-3 full-height-content shadow-sm bg-body">
+            <div class="lead" [ngClass]="{ 'visually-hidden': currentDictionary != null }">Select some word to study it</div>
+            <div [ngClass]="{ 'visually-hidden': currentDictionary == null }">
+                <app-dictionary-view [ngClass]="{ 'visually-hidden': !isViewDictionary }" [currentDictionary]="viewDictionary">
+                </app-dictionary-view>
+
+                <app-dictionary-edit [ngClass]="{ 'visually-hidden': isViewDictionary }" [currentDictionary]="editDictionary" (edited)="loadDictionaries()">
+                </app-dictionary-edit>
+            </div>
+        </div>
+    </div>
+</div>

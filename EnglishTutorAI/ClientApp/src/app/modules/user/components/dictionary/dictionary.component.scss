@@ -1,0 +1,25 @@
+.btn-outline-success {
+    color: #2DCE89 !important;
+    border-color: #2DCE89 !important;
+}
+
+.btn-outline-success:hover {
+    color: #fff !important;
+    background-color: #2DCE89;
+    border-color: #2DCE89;
+}
+
+.btn-success {
+    background-color: #2DCE89;
+    border-color: #2DCE89;
+}
+
+.action-column {
+    min-width: 140px;
+    width: 140px;
+    text-align: end;
+}
+
+.full-height-content {
+    min-height: calc(100vh - 170px);
+}

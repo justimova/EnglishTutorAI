@@ -1,0 +1,54 @@
+
+
+<div class="row">
+    <div class="col-xl-5 p-xl-2 p-3">
+        <div class="p-3 border bg-light rounded-3 full-height-content shadow-sm bg-body"> 
+            <div class="spinner-border m-5 text-success" role="status" [ngClass]="{ 'visually-hidden': !isLoading }">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="d-flex flex-column">
+                <div class="d-flex flex-row justify-content-end">
+                    <div class="btn-group" [ngClass]="{ 'visually-hidden': isLoading || this.currentLangLevel == null }">
+                        <label for="langLevelButton" class="p-2">Language level:</label>
+                        <button class="btn dropdown-toggle btn-primary-bg-subtle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" name="langLevelButton">
+                            <strong>{{currentLangLevel?.code}}</strong> - {{currentLangLevel?.name}}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item"
+                                *ngFor="let langLevel of langLevels" (click)="onSelectLevel(langLevel)">
+                                <strong>{{langLevel.code}}</strong> - {{langLevel.name}}
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex-row"><hr class="border border-success border-1 opacity-50"></div>
+            </div>
+            <div [ngClass]="{ 'visually-hidden': isLoading || getGrammarTopicsByCurrentLangLevel().length > 0 }">No topics</div>
+            <div class="row" *ngFor="let grammarTopic of getGrammarTopicsByCurrentLangLevel()" [ngClass]="{
+                    'visually-hidden': isLoading || getGrammarTopicsByCurrentLangLevel().length <= 0,
+                    'bg-light': currentGrammarTopic?.grammarTopicId == grammarTopic.grammarTopicId
+                }">
+                <div class="col-xl-11 p-xl-2 p-3">
+                    <strong>{{grammarTopic.text}}</strong>
+                    <div><small>{{grammarTopic.description}}</small></div>
+                </div>
+                <div class="col-xl-1 p-xl-2 p-3 align-middle">
+                    <button type="button" class="btn btn-outline-info btn-sm" style="margin-top: 10px;" (click)="onView(grammarTopic)">
+                        <i class="fa fa-eye text-lg opacity-10" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-7 p-xl-2 p-3">
+        <div class="p-3 border bg-light rounded-3 full-height-content shadow-sm bg-body">
+            <div class="lead" [ngClass]="{ 'visually-hidden': currentGrammarTopic != null }">Select some topic to study it</div>
+            <div [ngClass]="{ 'visually-hidden': currentGrammarTopic == null }">
+                <h3 class="text-primary">{{currentGrammarTopic?.text}} </h3>
+                <div class="text-muted">{{currentGrammarTopic?.description}}</div>
+                <div class="flex-row"><hr class="border border-primary border-1 opacity-50"></div>
+                <div [innerHTML]="safeRecommendation" class="overflow-y-auto">
+            </div>
+        </div>
+    </div>
+</div>

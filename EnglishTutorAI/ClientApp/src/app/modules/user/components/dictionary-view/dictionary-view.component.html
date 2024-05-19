@@ -1,0 +1,7 @@
+<div class="row">
+    <h4>{{currentDictionary.text}}</h4>
+    <div>{{currentDictionary.transcript}}</div>
+    <div>{{currentDictionary.translatedText}}</div>
+    <div class="mt-3" [ngClass]="{ 'visually-hidden': !currentDictionary.examples }"><strong>Examples:</strong></div>
+    <div>{{currentDictionary.examples}}</div>
+</div>

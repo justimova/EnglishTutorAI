@@ -1,0 +1,40 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Modified on</th>
+        <th scope="col">State</th>
+        <th scope="col">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let story of stories" [ngClass]="{ 'table-secondary': currentStory?.storyId == story.storyId }">
+        <th scope="row">{{story.title}}</th>
+        <td>{{getFormattingDateTime(story.modificationDate)}}</td>
+        <td>
+          <span class="badge bg-warning" [ngClass]="{ 'visually-hidden': story.status != 0 }">in progress</span>
+          <span class="badge bg-success" [ngClass]="{ 'visually-hidden': story.status != 1 }">done</span>
+        </td>
+        <td class="text-begin action-column">
+            <button type="button" class="btn btn-outline-info btn-sm" 
+              [ngClass]="{ 
+                'visually-hidden': story.status == 0 || currentStory?.storyId == story.storyId
+              }" (click)="onViewStory(story)">
+                <i class="fa fa-eye text-lg opacity-10" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-outline-success btn-sm" 
+              [ngClass]="{
+                'visually-hidden': story.status == 1 || currentStory?.storyId == story.storyId
+              }" (click)="onEditStory(story)">
+                <i class="fa fa-book text-lg opacity-10" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-outline-danger btn-sm ms-1" 
+              [ngClass]="{
+                'visually-hidden': story.status == 1 || currentStory?.storyId == story.storyId
+              }" (click)="onDeleteStory(story)">
+                <i class="fa fa-trash-o text-lg opacity-10" aria-hidden="true"></i>
+            </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
