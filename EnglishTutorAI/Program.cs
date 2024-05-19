@@ -1,21 +1,25 @@
-using EnglishTutorAI.Model;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
+using BootstrapModule;
+using EnglishTutorAI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddHostedService<DataInitializationService>();
 
-string? connection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
+builder.Services.AddAutoMapper();
+
+builder.Services.AddUnitOfWork(builder.Configuration);
+
+//string? connection = builder.Configuration.GetConnectionString("DefaultConnection");
+//builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
 
 builder.Services.AddControllers();
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentity<User, IdentityRole>()
-	.AddEntityFrameworkStores<ApplicationContext>();
+builder.Services.AddUserIdentity();
+//builder.Services.AddIdentity<User, IdentityRole>()
+//	.AddEntityFrameworkStores<ApplicationContext>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options => {
@@ -28,6 +32,9 @@ builder.Services.AddSpaStaticFiles(configuration => {
 });
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddDomainServices();
+builder.Services.AddAiServices(builder.Configuration);
+
 
 var app = builder.Build();
 
