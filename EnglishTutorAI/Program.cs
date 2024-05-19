@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using BootstrapModule;
-using EnglishTutorAI;
+using EnglishTutorAI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

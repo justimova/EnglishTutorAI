@@ -41,6 +41,7 @@ public class GrammarTopicService : UnitOfWorkService, IGrammarTopicService
 					topic.LanguageLevel.Code);
 				
 			});
+			
 			await UnitOfWork.SaveChangesAsync();
 		}
 	}
