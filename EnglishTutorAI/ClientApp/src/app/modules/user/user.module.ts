@@ -25,6 +25,8 @@ import { DictionaryViewComponent } from './components/dictionary-view/dictionary
 import { DictionaryEditComponent } from './components/dictionary-edit/dictionary-edit.component';
 import { GrammarComponent } from './components/grammar/grammar.component';
 import { GrammarTopicService } from './services/grammar-topic.service';
+import { EditorModule } from 'primeng/editor';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { GrammarTopicService } from './services/grammar-topic.service';
     UserRoutingModule,
     SharedModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    EditorModule,
+    InputTextareaModule
   ],
   providers: [
     UserMenuItemsService,

@@ -10,9 +10,43 @@
             <span [ngClass]="{ 'visually-hidden': !hasCurrentRecommendation() }">Well done! Let's translate one more text. You can choose the topic from the list or </span>
             <a (click)="onCreateEssay()" class="btn btn-link text-lg pt-0">create new one</a>
           </div>
-          <h2>{{currentEssay?.title}}</h2>
-          <p>{{currentEssay?.sourceText}}</p>
-          <h3>Your translation</h3>
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{currentEssay.title}}</h5>
+              <p class="card-text">{{currentEssay.sourceText}}</p>
+            </div>
+          </div>
+
+          <!-- <h2>{{currentEssay.title}}</h2>
+          <p>{{currentEssay.sourceText}}</p> -->
+          <div class="card mt-3"  [ngClass]="{ 'visually-hidden': hasCurrentRecommendation()}">
+            <div class="card-body">
+              <h5 class="card-title">Your translation</h5>
+
+              <form #newForm="ngForm" novalidate="novalidate" [ngClass]="{ 'visually-hidden': hasCurrentRecommendation()}">
+                <div>
+                  <textarea required="required" class="form-control" rows="5" placeholder="Translate text here..." name="translatedText" [(ngModel)]="translatedText"
+                  #newTranslatedText="ngModel" [ngClass]="{ 
+                    'is-invalid': newTranslatedText.invalid && (newTranslatedText.dirty || newTranslatedText.touched || newForm.submitted), 
+                    'is-valid': newTranslatedText.valid && (newTranslatedText.dirty || newTranslatedText.touched || newForm.submitted) 
+                  }"
+                  [attr.readonly]="isCurrentEssayTranslating ? '' : null" >
+                  </textarea>
+                  <span class="text-danger" *ngIf="newTranslatedText.invalid && (newTranslatedText.dirty || newTranslatedText.touched || newForm.submitted) && newTranslatedText.errors!['required']">You should translate the text</span>
+                </div>
+                <div class="control-panel-end">
+                  <button class="btn btn-success mt-3" (click)="onTranslate()" [ngClass]="{ 'visually-hidden': isCurrentEssayTranslating }">Translate</button>
+                  <button class="btn btn-success mt-3" type="button" disabled [ngClass]="{ 'visually-hidden': !isCurrentEssayTranslating }">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Translating...
+                  </button>
+                </div>
+              </form>
+    
+            </div>
+          </div>
+          <!-- <h3>Your translation</h3>
           <form #newForm="ngForm" novalidate="novalidate" [ngClass]="{ 'visually-hidden': hasCurrentRecommendation()}">
             <div>
               <textarea required="required" class="form-control" rows="5" placeholder="Translate text here..." name="translatedText" [(ngModel)]="translatedText"
@@ -20,7 +54,7 @@
                 'is-invalid': newTranslatedText.invalid && (newTranslatedText.dirty || newTranslatedText.touched || newForm.submitted), 
                 'is-valid': newTranslatedText.valid && (newTranslatedText.dirty || newTranslatedText.touched || newForm.submitted) 
               }"
-              [attr.readonly]="isCurrentEssayTranslating ? '' : null">
+              [attr.readonly]="isCurrentEssayTranslating ? '' : null" >
               </textarea>
               <span class="text-danger" *ngIf="newTranslatedText.invalid && (newTranslatedText.dirty || newTranslatedText.touched || newForm.submitted) && newTranslatedText.errors!['required']">You should translate the text</span>
             </div>
@@ -31,14 +65,30 @@
                 Translating...
               </button>
             </div>
-          </form>
+          </form> -->
           <div [ngClass]="{ 'visually-hidden': !hasCurrentRecommendation()}">
-            <div>
+            <div class="card mt-3">
+              <div class="card-body">
+                <h5 class="card-title">Your translation</h5>
+                <p class="card-text">{{currentEssay.translatedText}}</p>
+              </div>
+            </div>
+
+
+            <!-- <div>
               {{currentEssay.translatedText}}
+            </div> -->
+
+            <div class="card mt-3">
+              <div class="card-body">
+                <h5 class="card-title">Good job! Let's see on your result</h5>
+                <div class="card-text" [innerHTML]="safeRecommendation"></div>
+              </div>
             </div>
-            <h3 class="mt-3">Good job! Let's see on your result</h3>
+
+            <!-- <h3 class="mt-3">Good job! Let's see on your result</h3>
             <div [innerHTML]="safeRecommendation">
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

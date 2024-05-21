@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let essay of essays" [ngClass]="{ 'table-secondary': currentEssay?.essayId == essay.essayId }">
-      <th scope="row">{{essay.title}}</th>
+      <td scope="row">{{essay.title}}</td>
       <td>{{getFormattingDateTime(essay.modificationDate)}}</td>
       <td>
         <span class="badge bg-warning" [ngClass]="{ 'visually-hidden': essay.status != 0 }">in progress</span>

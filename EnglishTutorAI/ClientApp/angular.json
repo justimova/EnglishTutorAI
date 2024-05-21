@@ -33,6 +33,8 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -78,10 +80,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "TaskManager:build:production"
+              "buildTarget": "TaskManager:build:production"
             },
             "development": {
-              "browserTarget": "TaskManager:build:development"
+              "buildTarget": "TaskManager:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "TaskManager:build"
+            "buildTarget": "TaskManager:build"
           }
         },
         "test": {
