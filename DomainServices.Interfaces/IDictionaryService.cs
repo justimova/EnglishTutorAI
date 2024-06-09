@@ -1,4 +1,4 @@
-﻿using DataTransferObjects.Dictionary;
+﻿using DataTransferObjects;
 
 namespace DomainServices.Interfaces;
 

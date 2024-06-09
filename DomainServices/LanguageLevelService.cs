@@ -21,7 +21,6 @@ public class LanguageLevelService : UnitOfWorkService, ILanguageLevelService
 	public LanguageLevelDto GetLanguageLevelById(int languageLevelId) {
 		var languageLevel = _languageLevelRepository
 			.GetAll().FirstOrDefault(l => l.LanguageLevelId == languageLevelId);
-			//.FindBy(l => l.LanguageLevelId == languageLevelId);
 		return _mapper.Map<LanguageLevelDto>(languageLevel);
 	}
 

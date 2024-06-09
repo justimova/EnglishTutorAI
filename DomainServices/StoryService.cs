@@ -1,6 +1,6 @@
 ﻿using AiServices;
 using AutoMapper;
-using DataTransferObjects.Reading;
+using DataTransferObjects;
 using DbModels;
 using DomainServices.Interfaces;
 using InfrastructureService.Interfaces;

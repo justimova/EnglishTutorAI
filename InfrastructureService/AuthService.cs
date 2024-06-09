@@ -3,7 +3,7 @@ using System.Security;
 using System.Security.Claims;
 using System.Text;
 using AutoMapper;
-using DataTransferObjects.User;
+using DataTransferObjects;
 using DbModels;
 using Infrastructure.Interfaces;
 using InfrastructureService.Interfaces;

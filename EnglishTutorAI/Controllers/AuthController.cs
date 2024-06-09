@@ -1,5 +1,5 @@
 ﻿using System.Security;
-using DataTransferObjects.User;
+using DataTransferObjects;
 using Infrastructure.Interfaces;
 using InfrastructureService.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -38,5 +38,4 @@ public class AuthController : ControllerBase
 			return Unauthorized(new { message = "Invalid email or password. Please enter correct email and password" });
 		}
 	}
-
 }

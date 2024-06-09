@@ -1,6 +1,6 @@
 ﻿using AiServices;
 using AutoMapper;
-using DataTransferObjects.Grammar;
+using DataTransferObjects;
 using DbModels;
 using DomainServices.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +45,4 @@ public class GrammarTopicService : UnitOfWorkService, IGrammarTopicService
 			await UnitOfWork.SaveChangesAsync();
 		}
 	}
-
-	
 }

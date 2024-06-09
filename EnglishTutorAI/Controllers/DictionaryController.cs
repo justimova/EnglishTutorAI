@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using DataTransferObjects.Dictionary;
+﻿using DataTransferObjects;
 using DomainServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +16,6 @@ public class DictionaryController : ControllerBase
 		_dictionaryService = dictionaryService;
 	}
 
-	// GET: api/<DictionaryController>/searchDictionaries/search
 	[HttpGet]
 	[Route("searchDictionaries/{search}")]
 	public ActionResult<IEnumerable<DictionaryDto>> SearchDictionaries(string search) {
@@ -25,34 +23,24 @@ public class DictionaryController : ControllerBase
 		return Ok(dictionaryDtos);
 	}
 	
-	// GET: api/<DictionaryController>/getAll/search
 	[HttpGet]
 	public ActionResult<IEnumerable<DictionaryDto>> Get() {
 		IEnumerable<DictionaryDto> dictionarieDtos = _dictionaryService.GetDictionaries();
 		return Ok(dictionarieDtos);
 	}
 
-	//// GET api/<DictionaryController>/5
-	//[HttpGet("{id}")]
-	//public string Get(int id) {
-	//	return "value";
-	//}
-
-	// POST api/<DictionaryController>
 	[HttpPost]
 	public ActionResult<DictionaryDto> Post([FromBody] DictionaryDto dictionaryDto) {
 		dictionaryDto = _dictionaryService.CreateDictionary(dictionaryDto);
 		return Ok(dictionaryDto);
 	}
 
-	// PUT api/<DictionaryController>
 	[HttpPut]
 	public ActionResult<DictionaryDto> Put([FromBody] DictionaryDto dictionaryDto) {
 		dictionaryDto = _dictionaryService.SaveDictionary(dictionaryDto);
 		return Ok(dictionaryDto);
 	}
 
-	// DELETE api/<DictionaryController>/5
 	[HttpDelete("{id}")]
 	public ActionResult Delete(int id) {
 		_dictionaryService.DeleteDictionary(id);

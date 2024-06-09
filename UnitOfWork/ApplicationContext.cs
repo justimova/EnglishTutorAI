@@ -19,8 +19,6 @@ public class ApplicationContext : IdentityDbContext<ApplicationUser>, IUnitOfWor
 
 	public ApplicationContext(DbContextOptions<ApplicationContext> options)
 			: base(options) {
-		//Database.EnsureDeleted();
-		//Database.EnsureCreated();
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -73,7 +71,6 @@ public class ApplicationContext : IdentityDbContext<ApplicationUser>, IUnitOfWor
 			new Author { AuthorId = 29, AuthorName = "Edgar Rice Burroughs" },
 			new Author { AuthorId = 30, AuthorName = "Truman Capote" }
 		);
-
 		InitGrammarTopic(modelBuilder);
 	}
 

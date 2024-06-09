@@ -6,8 +6,6 @@ namespace DbModels;
 
 public class ApplicationUser : IdentityUser
 {
-	//[Key]
-	//public override string Id { get; set; } = default!;
 	[MaxLength(250)]
 	public string? FirstName { get; set; }
 	[MaxLength(250)]
@@ -18,5 +16,4 @@ public class ApplicationUser : IdentityUser
 	[Required]
 	[DefaultValue(1)]
 	public int LanguageLevelId { get; set; } = 1;
-	// public LanguageLevel LanguageLevel { get; set; }
 }

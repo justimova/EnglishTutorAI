@@ -1,4 +1,4 @@
-﻿namespace DataTransferObjects.Writing;
+﻿namespace DataTransferObjects;
 
 public class EssayDto
 {
@@ -11,5 +11,4 @@ public class EssayDto
     public DateTime CreationDate { get; set; }
     public DateTime? ModificationDate { get; set; }
     public int Status { get; set; } = 0;
-
 }

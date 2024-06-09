@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataTransferObjects.User;
+namespace DataTransferObjects;
 
 public class UserForRegistrationDto
 {

@@ -1,4 +1,4 @@
-﻿using DataTransferObjects.Reading;
+﻿using DataTransferObjects;
 
 namespace DomainServices.Interfaces;
 

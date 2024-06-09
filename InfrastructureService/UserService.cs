@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
-using DataTransferObjects.User;
+using DataTransferObjects;
 using DbModels;
 using InfrastructureService.Interfaces;
 using Microsoft.AspNetCore.Http;

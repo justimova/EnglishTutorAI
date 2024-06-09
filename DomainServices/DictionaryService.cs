@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DataTransferObjects.Dictionary;
+using DataTransferObjects;
 using DbModels;
 using DomainServices.Interfaces;
 using InfrastructureService.Interfaces;

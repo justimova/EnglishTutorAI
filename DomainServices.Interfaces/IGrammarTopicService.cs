@@ -1,4 +1,4 @@
-﻿using DataTransferObjects.Grammar;
+﻿using DataTransferObjects;
 
 namespace DomainServices.Interfaces;
 

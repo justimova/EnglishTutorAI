@@ -1,4 +1,4 @@
-﻿using DataTransferObjects.User;
+﻿using DataTransferObjects;
 
 namespace Infrastructure.Interfaces;
 

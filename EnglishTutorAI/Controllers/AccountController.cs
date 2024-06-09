@@ -1,7 +1,7 @@
-﻿using DataTransferObjects.User;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using InfrastructureService.Interfaces;
+using DataTransferObjects;
 
 namespace EnglishTutorAI.Controllers;
 
@@ -28,5 +28,4 @@ public class AccountController : ControllerBase
 		var userDto = _userService.SaveCurrentUser(updateUserModel);
 		return Ok(userDto);
 	}
-
 }

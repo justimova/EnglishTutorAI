@@ -10,9 +10,9 @@ public class Repository
 
 	public Repository(IUnitOfWork unitOfWork) {
 		Context = unitOfWork as ApplicationContext;
-
 		if (Context == null) {
-			throw new InvalidOperationException("UnitOfWork of the type EnglishTrainingDbContext should be used while a entity framework data access are used.");
+			throw new InvalidOperationException("UnitOfWork of the type EnglishTrainingDbContext should" +
+				" be used while a entity framework data access are used.");
 		}
 	}
 }
@@ -39,21 +39,6 @@ public class Repository<T> : Repository, IRepository<T> where T : class
 		return GetAll().Where(predicate);
 	}
 
-	//public void BulkInsert(IEnumerable<T> entities)
-	//{
-	//    Context.BulkInsert(entities);
-	//}
-
-	//public void BulkInsertOrUpdate(IEnumerable<T> entities)
-	//{
-	//    Context.BulkInsertOrUpdate(entities);
-	//}
-
-	//public void BulkDelete(IEnumerable<T> entities)
-	//{
-	//    Context.BulkDelete(entities);
-	//}
-
 	public virtual void Add(T entity) {
 		Context.Set<T>().Add(entity);
 	}
@@ -73,10 +58,6 @@ public class Repository<T> : Repository, IRepository<T> where T : class
 	public virtual void Delete(T entity) {
 		Context.Set<T>().Remove(entity);
 	}
-
-	//public virtual T GetById(int id) {
-	//	return GetAll().FirstOrDefault(x => x.Id == id);
-	//}
 
 	public T GetSingle(Expression<Func<T, bool>> expression) {
 		return GetAll().FirstOrDefault(expression);

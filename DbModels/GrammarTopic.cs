@@ -17,4 +17,3 @@ public class GrammarTopic
 	public int Order { get; set; } = 0;
 	public string Explanation { get; set; } = string.Empty;
 }
-

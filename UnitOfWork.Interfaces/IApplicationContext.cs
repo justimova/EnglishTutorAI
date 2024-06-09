@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace UnitOfWork.Interfaces;
+﻿namespace UnitOfWork.Interfaces;
 
 public interface IApplicationContext
-{
-	//DbSet<Essay> Essays { get; set; }
-}
+{}

@@ -1,11 +1,10 @@
 ﻿using AiServices;
 using AutoMapper;
-using DataTransferObjects.Chat;
-using DataTransferObjects.Writing;
 using DomainServices.Interfaces;
 using UnitOfWork.Interfaces;
 using DbModels;
 using InfrastructureService.Interfaces;
+using DataTransferObjects;
 
 namespace DomainServices;
 

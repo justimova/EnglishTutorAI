@@ -23,5 +23,4 @@ public class AuthorRepository : Repository<Author>
 		}
 		return authors;
 	}
-
 }

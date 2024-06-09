@@ -1,4 +1,4 @@
-﻿namespace DataTransferObjects.Chat;
+﻿namespace DataTransferObjects;
 
 public class AiMessageDto
 {

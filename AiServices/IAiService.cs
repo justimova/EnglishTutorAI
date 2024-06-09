@@ -1,4 +1,4 @@
-﻿using DataTransferObjects.Chat;
+﻿using DataTransferObjects;
 
 namespace AiServices;
 

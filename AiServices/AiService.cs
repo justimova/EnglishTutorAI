@@ -1,8 +1,7 @@
 ﻿using System.Text.Json;
 using AutoMapper;
-using DataTransferObjects.Chat;
+using DataTransferObjects;
 using DataTransferObjects.Writing;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OpenAI_API;
 using OpenAI_API.Chat;
@@ -12,6 +11,7 @@ namespace AiServices;
 
 public class AiService : IAiService
 {
+	private readonly string _jsonResponseFormat = "JSON";
 	private readonly AiSettings _aiSettings;
 	private readonly IMapper _mapper;
 	private readonly OpenAIAPI _openAIAPI;
@@ -19,14 +19,14 @@ public class AiService : IAiService
 	public AiService(IOptions<AiSettings> aiSettings, IMapper mapper) {
 		_aiSettings = aiSettings.Value;
 		_mapper = mapper;
-		string apiKey = _aiSettings.SecretKey; // "sk-proj-pO9zCQYM8Lmpugon0cRwT3BlbkFJCcMn4ztRU8huzt8m8XvC"; // Test4
+		string apiKey = _aiSettings.SecretKey;
 		APIAuthentication auth = new(apiKey);
 		_openAIAPI = new(auth);
 	}
 
 	private Conversation CreateChatConversation(string? responseFormat = null) {
 		Conversation chat = _openAIAPI.Chat.CreateConversation();
-		chat.Model = Model.GPT4_Turbo;//.ChatGPTTurbo;
+		chat.Model = Model.GPT4_Turbo;
 		chat.RequestParameters.Temperature = 1;
 		if (responseFormat != null) {
 			chat.RequestParameters.ResponseFormat = responseFormat;
@@ -53,7 +53,7 @@ public class AiService : IAiService
 	}
 
 	public IList<AiMessageDto> CreateTextForWriting(string langLevel, out string topic, out string text) {
-		Conversation chat = CreateChatConversation(responseFormat: "JSON");
+		Conversation chat = CreateChatConversation(responseFormat: _jsonResponseFormat);
 		chat.AppendSystemMessage(string.Format(_aiSettings.CreateWritingTextSystemMessage, langLevel));
 		var subject = GetTopic();
 		chat.AppendUserInput(string.Format(_aiSettings.CreateWritingTextSystemMessage, subject));
@@ -82,7 +82,7 @@ public class AiService : IAiService
 
 	public void CreateTextForReading(string langLevel, string? authorName, out string title,
 			out IList<(string Text, string TranslatedText)> paragraphs) {
-		Conversation chat = CreateChatConversation(responseFormat: "JSON");
+		Conversation chat = CreateChatConversation(responseFormat: _jsonResponseFormat);
 		chat.AppendSystemMessage(string.Format(_aiSettings.CreateReadingTextSystemMessage,
 			_aiSettings.NumberOfWordsForReadingText, langLevel));
 		chat.AppendUserInput(string.Format(_aiSettings.CreateReadingTextUserMessage, authorName));
@@ -96,8 +96,8 @@ public class AiService : IAiService
 
 	public string CreateExplanationForGrammarTopicAsync(string topic, string description, string langLevel) {
 		Conversation chat = CreateChatConversation();
-		chat.AppendSystemMessage(string.Format("Ты преподаватель английского языка. Расскажи про грамматическую тему в английском языке, которую укажет пользователь на уровне {0}. Ответ оформи в формате HTML. Не добавляй в начале ```html и не добавляй в конце ```. Весь текст напиши на английском. Не повторяй в своем ответе заданную тему, сразу начинай объснение. Весь текст размести в теге <div>. Внутри этого тега div допускается использовать теги: <div>, <p>, теги списков, теги заголовков, начиная с h4 и прочие теги форматирования. Пришли только описание грамматической темы.", langLevel));
-		chat.AppendUserInput(string.Format("Расскажи про грамматическую тему \"{0} - {1}\" в соответствии с инструкциями", topic, description));
+		chat.AppendSystemMessage(string.Format(_aiSettings.CreateGrammarTopicSystemMessage, langLevel));
+		chat.AppendUserInput(string.Format(_aiSettings.CreateGrammarTopicUserMessage, topic, description));
 		string response = chat.GetResponseFromChatbotAsync().GetAwaiter().GetResult();
 		return response;
 	}
