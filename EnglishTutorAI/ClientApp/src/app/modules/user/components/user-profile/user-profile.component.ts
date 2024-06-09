@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { LanguageLevel } from 'src/app/models/language-level';
 import { ApplicationUser } from 'src/app/modules/auth/models/application-user';
 import { LanguageLevelService } from 'src/app/services/language-level.service';
@@ -18,8 +17,7 @@ export class UserProfileComponent implements OnInit {
   public userModel: ApplicationUser;
   langLevels: LanguageLevel[] = [];
 
-  constructor(private languageLevelService: LanguageLevelService, private accountService: AccountService,
-    private router: Router) {
+  constructor(private languageLevelService: LanguageLevelService, private accountService: AccountService) {
       this.userModel = new ApplicationUser();
     }
 
@@ -27,7 +25,6 @@ export class UserProfileComponent implements OnInit {
     this.languageLevelService.getLanguageLevels().subscribe(response => {
       this.langLevels = response;
     });
-
     this.accountService.getCurrentUser().subscribe(response => {
       this.userModel = response;
       this.userModel.languageLevel = this.langLevels.find(x => x.languageLevelId == this.userModel?.languageLevelId);

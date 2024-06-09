@@ -11,7 +11,6 @@ declare var bootstrap: any;
   styleUrls: ['./reading.component.scss']
 })
 export class ReadingComponent implements OnInit {
-
   currentStory: Story;
   isCurrentStoryLoading: boolean = false;
   isCurrentStoryLoaded: boolean = false;

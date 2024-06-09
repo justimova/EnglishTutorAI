@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-xl-7 p-xl-2 p-3">
         <div class="p-3 border bg-light rounded-3 full-height-content shadow-sm bg-body">
@@ -10,7 +9,6 @@
                         </button>
                         <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchText" name="search">
                         <button class="btn btn-info" type="button" (click)="onSearch()">Search</button>
-
                     </div>
                 </form>
             </div>
@@ -43,7 +41,6 @@
             <div [ngClass]="{ 'visually-hidden': currentDictionary == null }">
                 <app-dictionary-view [ngClass]="{ 'visually-hidden': !isViewDictionary }" [currentDictionary]="viewDictionary">
                 </app-dictionary-view>
-
                 <app-dictionary-edit [ngClass]="{ 'visually-hidden': isViewDictionary }" [currentDictionary]="editDictionary" (edited)="loadDictionaries()">
                 </app-dictionary-edit>
             </div>

@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class StoryService {
-
   private apiUrl: string = "/api/story";
 
   constructor(private httpClient: HttpClient) { }
@@ -33,4 +32,5 @@ export class StoryService {
   getDoneStoryCount(): Observable<number> {
     return this.httpClient.get<number>(`${this.apiUrl}/getDoneStoryCount`);
   }
+
 }

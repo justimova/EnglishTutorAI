@@ -5,7 +5,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class EssayService {
-
   private apiUrl: string = "/api/essay";
 
   constructor(private httpClient: HttpClient) { }

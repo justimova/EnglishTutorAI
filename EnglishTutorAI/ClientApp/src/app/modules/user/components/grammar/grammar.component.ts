@@ -5,6 +5,7 @@ import { GrammarTopic } from '../../models/grammar-topic';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { LanguageLevel } from 'src/app/models/language-level';
 import { LanguageLevelService } from 'src/app/services/language-level.service';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-grammar',
@@ -12,8 +13,6 @@ import { LanguageLevelService } from 'src/app/services/language-level.service';
   styleUrls: ['./grammar.component.scss']
 })
 export class GrammarComponent implements OnInit {
-
-  //userLangLevelId: number;
   grammarTopics: GrammarTopic[] = [];
   isLoading: boolean = false;
   currentGrammarTopic: GrammarTopic | null = null;
@@ -25,7 +24,8 @@ export class GrammarComponent implements OnInit {
   constructor(private globalVariablesService: GlobalVariablesService,
       private grammarTopicService: GrammarTopicService,
       private sanitizer: DomSanitizer,
-      private languageLevelService: LanguageLevelService) {
+      private languageLevelService: LanguageLevelService,
+      private accountService: AccountService) {
     this.userLangLevel = this.globalVariablesService.getUserLangLevel();
     this.currentLangLevel = this.userLangLevel;
     this.safeRecommendation = this.sanitizer.bypassSecurityTrustHtml('');
@@ -37,7 +37,9 @@ export class GrammarComponent implements OnInit {
     });
     this.languageLevelService.getLanguageLevels().subscribe(response => {
       this.langLevels = response;
-      //this.userLangLevel = this.langLevels.find(item => item.languageLevelId == this.userLangLevelId) || null;
+      this.accountService.getCurrentUser().subscribe(response => {
+        this.currentLangLevel = this.langLevels.find(x => x.languageLevelId == response.languageLevelId)!!;
+      });
     });
   }
 

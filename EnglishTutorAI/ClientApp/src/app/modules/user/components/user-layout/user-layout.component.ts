@@ -9,7 +9,6 @@ import { filter } from 'rxjs';
   styleUrls: ['./user-layout.component.scss']
 })
 export class UserLayoutComponent implements OnInit {
-
   title: string = "";
 
   constructor(private userMenuItemsService: UserMenuItemsService,

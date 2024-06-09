@@ -9,7 +9,6 @@ import { ApplicationUser } from '../models/application-user';
   providedIn: 'root'
 })
 export class AuthService {
-
   private apiUrl: string = "/api/auth";
   private jwtHelper = new JwtHelperService();
   currentUserEmail: string | null = null;

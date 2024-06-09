@@ -7,7 +7,6 @@ import { Observable } from "rxjs";
     providedIn: 'root'
 })
 export class AccountService {
-
     private apiUrl: string = "/api/account";
 
     constructor(private http: HttpClient) {}
@@ -19,5 +18,4 @@ export class AccountService {
     public saveCurrentUser(applicationUser: ApplicationUser): Observable<ApplicationUser> {
         return this.http.put<ApplicationUser>(`${this.apiUrl}`, applicationUser);
     }
-
 }

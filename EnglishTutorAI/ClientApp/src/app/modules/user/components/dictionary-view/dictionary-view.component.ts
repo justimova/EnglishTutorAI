@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Dictionary } from '../../models/dictionary';
 
 @Component({
@@ -6,13 +6,9 @@ import { Dictionary } from '../../models/dictionary';
   templateUrl: './dictionary-view.component.html',
   styleUrls: ['./dictionary-view.component.scss']
 })
-export class DictionaryViewComponent implements OnInit {
-
+export class DictionaryViewComponent {
   @Input() currentDictionary: Dictionary = new Dictionary();
   
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

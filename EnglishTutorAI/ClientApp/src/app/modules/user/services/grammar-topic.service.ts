@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class GrammarTopicService {
-
   private apiUrl: string = "/api/grammarTopic";
 
   constructor(private httpClient: HttpClient) { }

@@ -1,11 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '../../models/menu-item';
 import { GlobalVariablesService } from 'src/app/services/global-variables.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { UserMenuItemsService } from '../../services/user-menu-items.service';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { filter } from 'rxjs';
-
 
 @Component({
   selector: 'user-aside-nav-panel',

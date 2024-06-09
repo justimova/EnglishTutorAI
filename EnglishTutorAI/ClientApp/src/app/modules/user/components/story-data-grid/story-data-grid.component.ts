@@ -9,7 +9,6 @@ import { Subject, Subscription } from 'rxjs';
   styleUrls: ['./story-data-grid.component.scss']
 })
 export class StoryDataGridComponent implements OnInit {
-
   stories: Story[] = [];
   @Input() currentStory: Story | null = null;
   @Output() viewClick = new EventEmitter<Story>();

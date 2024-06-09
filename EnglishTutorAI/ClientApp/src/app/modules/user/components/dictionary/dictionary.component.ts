@@ -8,7 +8,6 @@ import { Dictionary } from '../../models/dictionary';
   styleUrls: ['./dictionary.component.scss']
 })
 export class DictionaryComponent implements OnInit {
-
   isLoading: boolean = false;
   searchText: string = "";
   dictionaries: Dictionary[] = [];

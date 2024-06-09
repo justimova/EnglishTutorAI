@@ -7,9 +7,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { TrainingComponent } from './components/training/training.component';
 import { AsideNavPanelComponent } from './components/aside-nav-panel/aside-nav-panel.component';
 import { UserMenuItemsService } from './services/user-menu-items.service';
-import { TopNavPanelComponent } from './components/top-nav-panel/top-nav-panel.component';
 import { DashboardService } from './services/dashboard.service';
-import { BriefStatisticsComponent } from './components/brief-statistics/brief-statistics.component';
 import { SharedModule } from '../shared/shared.module';
 import { WritingComponent } from './components/writing/writing.component';
 import { EssayService } from './services/essay.service';
@@ -37,8 +35,6 @@ import { AccountService } from './services/account.service';
     DashboardComponent,
     TrainingComponent,
     AsideNavPanelComponent,
-    TopNavPanelComponent,
-    BriefStatisticsComponent,
     WritingComponent,
     EssayDataGridComponent,
     ReadingComponent,

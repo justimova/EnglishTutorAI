@@ -11,7 +11,6 @@ declare var bootstrap: any;
   styleUrls: ['./essay-data-grid.component.scss']
 })
 export class EssayDataGridComponent implements OnInit {
-
   essays: Essay[] = [];
   @Output() editClick = new EventEmitter<Essay>();
   @Output() viewClick = new EventEmitter<Essay>();

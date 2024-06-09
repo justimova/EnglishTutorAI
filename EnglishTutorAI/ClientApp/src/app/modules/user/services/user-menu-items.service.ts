@@ -5,9 +5,6 @@ import { MenuItem } from '../models/menu-item';
 export class UserMenuItemsService {
   private menuItems;
 
-  /**
-   *
-   */
   constructor() {
     this.menuItems = [
       { title: 'Dashboard', default: false, route: '/user/dashboard', icon: 'fa-tachometer', color: 'text-primary' },

@@ -20,11 +20,8 @@ export class GlobalVariablesService {
     return this._titleSite;
   }
 
-  // getUserLangLevelId(): number {
-  //   return this._userLangLevel.languageLevelId;
-  // }
-
   getUserLangLevel(): LanguageLevel {
     return this._userLangLevel;
   }
+  
 }
