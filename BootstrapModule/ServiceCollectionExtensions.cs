@@ -1,6 +1,11 @@
 ﻿using AiServices;
+using DbModels;
 using DomainServices;
 using DomainServices.Interfaces;
+using Infrastructure.Interfaces;
+using InfrastructureService;
+using InfrastructureService.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +16,7 @@ namespace BootstrapModule;
 
 public static class ServiceCollectionExtensions
 {
-	public static IServiceCollection AddAutoMapper(this IServiceCollection source) {
+	public static IServiceCollection AddAutoMapper2(this IServiceCollection source) {
 		source.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 		return source;
 	}
@@ -31,7 +36,10 @@ public static class ServiceCollectionExtensions
 	}
 
 	public static IServiceCollection AddUserIdentity(this IServiceCollection source) {
-		//source.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
+		//source.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
+		source.AddIdentity<ApplicationUser, IdentityRole>()
+			.AddEntityFrameworkStores<ApplicationContext>()
+			.AddDefaultTokenProviders();
 		return source;
 	}
 
@@ -44,29 +52,42 @@ public static class ServiceCollectionExtensions
 		return source;
 	}
 
+	public static IServiceCollection AddInfrastrucureServices(this IServiceCollection source, IConfiguration configuration) {
+		var authSettingsSection = configuration?.GetSection("AuthSettings");
+		source.Configure<AuthSettings>(authSettingsSection);
+		source.AddScoped<IAuthService, AuthService>();
+		source.AddScoped<IUserService, UserService>();
+		return source;
+	}
+
 	public static IServiceCollection AddAiServices(this IServiceCollection source, IConfiguration configuration) {
-		string number = configuration?.GetSection("AISettings")["NumberOfWordsForReadingText"];
-		int.TryParse(number, out int numberOfWordsForReadingText);
-		string? createWritingTextSystemMessage = configuration?.GetSection("AISettings")["CreateWritingTextSystemMessage"];
-		string? createWritingTextUserMessage = configuration?.GetSection("AISettings")["CreateWritingTextUserMessage"];
-		string? getRecommendationWritingTextSystemMessage = 
-			configuration?.GetSection("AISettings")["GetRecommendationWritingTextSystemMessage"];
-		string? getTopicSystemMessage = configuration?.GetSection("AISettings")["GetTopicSystemMessage"];
-		string? getTopicUserMessage = configuration?.GetSection("AISettings")["GetTopicUserMessage"];
-		string? createReadingTextSystemMessage = configuration?.GetSection("AISettings")["CreateReadingTextSystemMessage"];
-		string? createReadingTextUserMessage = configuration?.GetSection("AISettings")["CreateReadingTextUserMessage"];
-		source.AddSingleton<IAiSettings>(service => {
-			return new AiSettings {
-				NumberOfWordsForReadingText = numberOfWordsForReadingText,
-				CreateWritingTextSystemMessage = createWritingTextSystemMessage ?? string.Empty,
-				CreateWritingTextUserMessage = createWritingTextUserMessage ?? string.Empty,
-				GetRecommendationWritingTextSystemMessage = getRecommendationWritingTextSystemMessage ?? string.Empty,
-				GetTopicSystemMessage = getTopicSystemMessage ?? string.Empty,
-				GetTopicUserMessage = getTopicUserMessage ?? string.Empty,
-				CreateReadingTextSystemMessage = createReadingTextSystemMessage ?? string.Empty,
-				CreateReadingTextUserMessage = createReadingTextUserMessage ?? string.Empty
-			};
-		});
+		var aiSettingsSection = configuration?.GetSection("AISettings");
+		source.Configure<AiSettings>(aiSettingsSection);
+		//var aiSettings = aiSettingsSection.Get<AiSettings>();
+		//aiSettings.NumberOfWordsForReadingText
+		//string number = aiSettingsSection["NumberOfWordsForReadingText"];
+		//int.TryParse(number, out int numberOfWordsForReadingText);
+		//string? createWritingTextSystemMessage = aiSettingsSection["CreateWritingTextSystemMessage"];
+		//string? createWritingTextUserMessage = aiSettingsSection["CreateWritingTextUserMessage"];
+		//string? getRecommendationWritingTextSystemMessage = 
+		//	aiSettingsSection["GetRecommendationWritingTextSystemMessage"];
+		//string? getTopicSystemMessage = aiSettingsSection["GetTopicSystemMessage"];
+		//string? getTopicUserMessage = aiSettingsSection["GetTopicUserMessage"];
+		//string? createReadingTextSystemMessage = aiSettingsSection["CreateReadingTextSystemMessage"];
+		//string? createReadingTextUserMessage = aiSettingsSection["CreateReadingTextUserMessage"];
+		//source.AddSingleton<IAiSettings>(service => aiSettingsSection.Get<AiSettings>());
+		//	{
+		//	return new AiSettings {
+		//		NumberOfWordsForReadingText = numberOfWordsForReadingText,
+		//		CreateWritingTextSystemMessage = createWritingTextSystemMessage ?? string.Empty,
+		//		CreateWritingTextUserMessage = createWritingTextUserMessage ?? string.Empty,
+		//		GetRecommendationWritingTextSystemMessage = getRecommendationWritingTextSystemMessage ?? string.Empty,
+		//		GetTopicSystemMessage = getTopicSystemMessage ?? string.Empty,
+		//		GetTopicUserMessage = getTopicUserMessage ?? string.Empty,
+		//		CreateReadingTextSystemMessage = createReadingTextSystemMessage ?? string.Empty,
+		//		CreateReadingTextUserMessage = createReadingTextUserMessage ?? string.Empty
+		//	};
+		//});
 		source.AddScoped<IAiService, AiService>();
 		return source;
 	}

@@ -1,12 +1,13 @@
 ﻿using DataTransferObjects.Reading;
-using DbModels;
 using DomainServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishTutorAI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class StoryController : ControllerBase
 {
 	private readonly IStoryService _storyService;
@@ -33,6 +34,13 @@ public class StoryController : ControllerBase
 	public ActionResult<StoryDto?> GetLastUnreadStory() {
 		StoryDto storyDto = _storyService.GetLastUnreadStory();
 		return Ok(storyDto);
+	}
+
+	[HttpGet]
+	[Route("getDoneStoryCount")]
+	public ActionResult<int> GetDoneStoryCount() {
+		int count = _storyService.GetDoneStoryCount();
+		return Ok(count);
 	}
 
 	// POST api/<StoryController>

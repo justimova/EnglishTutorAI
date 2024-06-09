@@ -15,5 +15,6 @@ public class Dictionary
 	[MaxLength(1000)]
 	public string Transcript { get; set; } = string.Empty;
 	public string Examples { get; set; } = string.Empty;
-
+	public string UserId { get; set; }
+	public ApplicationUser User { get; set; }
 }

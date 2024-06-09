@@ -22,6 +22,9 @@ export class UserMenuItemsService {
   }
 
   getTitleByRoute(route: string): string {
+    if (route == '/user/profile') {
+      return 'Profile';
+    }
     return this.menuItems.find(menuItem => menuItem.route == route)?.title ?? "";
   }
 

@@ -35,4 +35,9 @@ export class EssayService {
   deleteEssay(essayId: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.apiUrl}/${essayId}`);
   }
+
+  getDoneEssayCount(): Observable<number> {
+    return this.httpClient.get<number>(`${this.apiUrl}/getDoneEssayCount`);
+  }
+
 }

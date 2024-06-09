@@ -29,4 +29,8 @@ export class StoryService {
   deleteStory(storyId: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.apiUrl}/${storyId}`);
   }
+
+  getDoneStoryCount(): Observable<number> {
+    return this.httpClient.get<number>(`${this.apiUrl}/getDoneStoryCount`);
+  }
 }

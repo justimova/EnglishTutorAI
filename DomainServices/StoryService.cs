@@ -3,6 +3,7 @@ using AutoMapper;
 using DataTransferObjects.Reading;
 using DbModels;
 using DomainServices.Interfaces;
+using InfrastructureService.Interfaces;
 using UnitOfWork.Interfaces;
 
 namespace DomainServices;
@@ -13,16 +14,22 @@ public class StoryService : UnitOfWorkService, IStoryService
 	private readonly IStoryRepository _storyRepository;
 	private readonly IRepository<Author> _authorRepository;
 	private readonly IMapper _mapper;
+	private readonly IUserService _userService;
+	private readonly ILanguageLevelService _languageLevelService;
 
 	public StoryService(IUnitOfWork unitOfWork,
 			IAiService aiService,
 			IStoryRepository storyRepository,
 			IRepository<Author> authorRepository,
-			IMapper mapper) : base(unitOfWork) {
+			IMapper mapper,
+			IUserService userService,
+			ILanguageLevelService languageLevelService) : base(unitOfWork) {
 		_aiService = aiService;
 		_storyRepository = storyRepository;
 		_authorRepository = authorRepository;
 		_mapper = mapper;
+		_userService = userService;
+		_languageLevelService = languageLevelService;
 	}
 
 	private string? GetRandomAuthor(List<Author> authors) {
@@ -33,17 +40,21 @@ public class StoryService : UnitOfWorkService, IStoryService
 	}
 
     public IEnumerable<StoryDto> GetStories() {
-		IEnumerable<Story> stories = _storyRepository.GetStories();
+		var currentUser = _userService.GetCurrentUser();
+		IEnumerable<Story> stories = _storyRepository.GetStories(currentUser.Id);
 		IEnumerable<StoryDto> storyDtos = stories.Select(story => _mapper.Map<StoryDto>(story));
 		return storyDtos;
 	}
 
 	public StoryDto CreateStory(StoryDto storyDto) {
-		List<Author> authors = _authorRepository.GetAll().ToList();
+		var currentUser = _userService.GetCurrentUser();
+		var languageLevel = _languageLevelService.GetLanguageLevelById(currentUser.LanguageLevelId);
+		List<Author> authors = [.. _authorRepository.GetAll()];
 		var authorName = GetRandomAuthor(authors);
-		_aiService.CreateTextForReading("A2", authorName, out string title,
+		_aiService.CreateTextForReading(languageLevel.Code, authorName, out string title,
 			out IList<(string Text, string TranslatedText)> paragraphs);
 		Story story = _mapper.Map<Story>(storyDto);
+		story.UserId = currentUser.Id;
 		story.Title = title;
 		story.Status = StoryStatus.Unread;
 		var now = DateTime.Now;
@@ -62,7 +73,9 @@ public class StoryService : UnitOfWorkService, IStoryService
 	}
 
 	public StoryDto? GetLastUnreadStory() {
+		var currentUser = _userService.GetCurrentUser();
 		var essays = _storyRepository.GetAll()
+			.Where(s => s.UserId == currentUser.Id)
 			.OrderBy(story => story.Status)
 			.ThenByDescending(story => story.ModificationDate);
 		var story = essays.FirstOrDefault(essay => essay.Status == (int)StoryStatus.Unread);
@@ -71,6 +84,13 @@ public class StoryService : UnitOfWorkService, IStoryService
 		}
 		story = _storyRepository.GetStoryWithParagraphs(story.StoryId);
 		return _mapper.Map<StoryDto>(story);
+	}
+
+	public int GetDoneStoryCount() {
+		var currentUser = _userService.GetCurrentUser();
+		var essays = _storyRepository.GetAll()
+			.Where(s => s.UserId == currentUser.Id && s.Status == StoryStatus.Done);
+		return essays.Count();
 	}
 
 	public StoryDto SetStoryStatus(int storyId, int storyStatus) {

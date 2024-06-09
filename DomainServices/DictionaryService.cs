@@ -2,6 +2,7 @@
 using DataTransferObjects.Dictionary;
 using DbModels;
 using DomainServices.Interfaces;
+using InfrastructureService.Interfaces;
 using UnitOfWork.Interfaces;
 
 namespace DomainServices;
@@ -10,15 +11,20 @@ public class DictionaryService : UnitOfWorkService, IDictionaryService
 {
 	private readonly IRepository<Dictionary> _dictionaryRepository;
 	private readonly IMapper _mapper;
+	private readonly IUserService _userService;
 
-	public DictionaryService(IUnitOfWork unitOfWork, IRepository<Dictionary> dictionaryRepository, IMapper mapper)
+	public DictionaryService(IUnitOfWork unitOfWork, IRepository<Dictionary> dictionaryRepository, IMapper mapper,
+			IUserService userService)
 			: base(unitOfWork) {
 		_dictionaryRepository = dictionaryRepository;
 		_mapper = mapper;
+		_userService = userService;
 	}
 
 	public DictionaryDto CreateDictionary(DictionaryDto dictionaryDto) {
+		var currentUser = _userService.GetCurrentUser();
 		var dictionary = _mapper.Map<Dictionary>(dictionaryDto);
+		dictionary.UserId = currentUser.Id;
 		_dictionaryRepository.AddEntity(dictionary);
 		UnitOfWork.SaveChanges();
 		return _mapper.Map<DictionaryDto>(dictionary);
@@ -38,8 +44,9 @@ public class DictionaryService : UnitOfWorkService, IDictionaryService
 	}
 
 	public IEnumerable<DictionaryDto> GetDictionaries(string search = "") {
+		var currentUser = _userService.GetCurrentUser();
 		search = search.Trim();
-		var dictionaries = _dictionaryRepository.GetAll();
+		var dictionaries = _dictionaryRepository.GetAll().Where(dict => dict.UserId == currentUser.Id);
 		if (!string.IsNullOrEmpty(search)) {
 			dictionaries = dictionaries.Where(dictionary => dictionary.Text.Contains(search));
 		}

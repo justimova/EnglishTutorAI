@@ -17,6 +17,8 @@ public class Story
 	[MaxLength(500)]
 	public string Title { get; set; } = string.Empty;
 	public ICollection<StoryParagraph> Paragraphs { get; set; }
+    public string UserId { get; set; }
+	public ApplicationUser User { get; set; }
 }
 
 public enum StoryStatus

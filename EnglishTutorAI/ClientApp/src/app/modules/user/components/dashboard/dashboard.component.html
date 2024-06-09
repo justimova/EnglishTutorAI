@@ -8,48 +8,45 @@
           <div class="col-8">
             <div class="numbers">
               <p class="text-sm mb-0 text-uppercase font-weight-bold text-truncate">{{briefStatistic.title}}</p>
-              <h5 class="font-weight-bolder">
+              <h3 class="font-weight-bolder text-success">
                 {{briefStatistic.spentTime}}
-              </h5>
-              <p class="mb-0 text-truncate" [attr.hidden]="!isChangedDifferentTime(briefStatistic.differentTime) ? '' : null">
+              </h3>
+              <!-- <p class="mb-0 text-truncate" [attr.hidden]="!isChangedDifferentTime(briefStatistic.differentTime) ? '' : null">
                 <span class="text-sm font-weight-bolder" [ngClass]="isRaiseDifferentTime(briefStatistic.differentTime) ? 'text-success' : 'text-warning'">
                   {{briefStatistic.differentTime | signNumber }}</span>
                 since last 7 days
-              </p>
-              <p class="mb-0" [attr.hidden]="isChangedDifferentTime(briefStatistic.differentTime) ? '' : null">&nbsp;</p>
+              </p> -->
             </div>
           </div>
           <div class="col-4 text-end">
-            <div class="icon icon-shape shadow-primary text-center rounded-circle"
-                [ngClass]="isRaiseDifferentTime(briefStatistic.differentTime) ? 'bg-gradient-success' : 'bg-gradient-warning'">
-              <i class="fa text-lg opacity-10 br-success" aria-hidden="true"
-                [ngClass]="isRaiseDifferentTime(briefStatistic.differentTime) ? 'fa-thumbs-up' : 'fa-info'"></i>
+            <div class="icon icon-shape shadow-primary text-center rounded-circle">
+              <i class="fa text-lg opacity-10 text-warning" aria-hidden="true"
+                [ngClass]="briefStatistic.icon" style="font-size: 25px;"></i>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+<hr>
+
+<h4>Let's start!</h4>
+<div class="row">
+  <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
     <div class="card">
       <div class="card-body p-3">
         <div class="row">
-          <div class="col-8">
+          <div class="col-12">
             <div class="numbers">
-              <p class="text-sm mb-0 text-uppercase font-weight-bold text-truncate">Hours of studying</p>
-              <h5 class="font-weight-bolder">
-                $53,000
-              </h5>
-              <p class="mb-0">
-                <span class="text-success text-sm font-weight-bolder">+55%</span>
-                since yesterday
+              <p class="text-sm mb-0 text-uppercase font-weight-bold text-truncate">
+                You know that reading is a wonderful skill
               </p>
-            </div>
-          </div>
-          <div class="col-4 text-end">
-            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-              <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+              <p>Ready?</p>
+              <p style="padding-top: 20px;">
+                <a class="btn btn-link text-lg pt-0" routerLink="/user/training/reading">Let's read some interesting story now!</a>
+              </p>
             </div>
           </div>
         </div>
@@ -61,74 +58,63 @@
     <div class="card">
       <div class="card-body p-3">
         <div class="row">
-          <div class="col-8">
+          <div class="col-12">
             <div class="numbers">
-              <p class="text-sm mb-0 text-uppercase font-weight-bold text-truncate">Texts Read</p>
-              <h5 class="font-weight-bolder">
-                2,300
-              </h5>
-              <p class="mb-0">
-                <span class="text-success text-sm font-weight-bolder">+3%</span>
-                since last week
+              <p class="text-sm mb-0 text-uppercase font-weight-bold text-truncate">
+                Psst... How about writing a short essay?
               </p>
-            </div>
-          </div>
-          <div class="col-4 text-end">
-            <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-              <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+              <p>I know you can</p>
+              <p style="padding-top: 20px;">
+                <a class="btn btn-link text-lg pt-0" routerLink="/user/training/writing">Let's write it right now!</a>
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+
+
+<div class="row">
   <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
     <div class="card">
       <div class="card-body p-3">
         <div class="row">
-          <div class="col-8">
+          <div class="col-12">
             <div class="numbers">
-              <p class="text-sm mb-0 text-uppercase font-weight-bold text-truncate">Essays Written</p>
-              <h5 class="font-weight-bolder">
-                +3,462
-              </h5>
-              <p class="mb-0">
-                <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                since last quarter
+              <p class="text-sm mb-0 text-uppercase font-weight-bold text-truncate">
+                Hmmm... Grammar!
               </p>
-            </div>
-          </div>
-          <div class="col-4 text-end">
-            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-              <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+              <p>Remember that 10% of your studies can be English grammar</p>
+              <p style="padding-top: 20px;">
+                <a class="btn btn-link text-lg pt-0" routerLink="/user/training/grammar">Let's study some grammar rule!</a>
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-xl-3 col-sm-6">
+
+  <div class="col-xl-3 col-sm-6 mb-xl-1 mb-4">
     <div class="card">
       <div class="card-body p-3">
         <div class="row">
-          <div class="col-8">
+          <div class="col-12">
             <div class="numbers">
-              <p class="text-sm mb-0 text-uppercase font-weight-bold text-truncate">Grammar Rules Learned</p>
-              <h5 class="font-weight-bolder">
-                $103,430
-              </h5>
-              <p class="mb-0">
-                <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
+              <p class="text-sm mb-0 text-uppercase font-weight-bold text-truncate">
+                And vocabulary of course!
               </p>
-            </div>
-          </div>
-          <div class="col-4 text-end">
-            <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-              <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+              <p>The more words you know, the more texts you understand. If you know what I mean...</p>
+              <p style="padding-top: 20px;">
+                <a class="btn btn-link text-lg pt-0" routerLink="/user/training/dictionary">Let's add some word to dictionary!</a>
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 </div>

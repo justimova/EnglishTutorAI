@@ -1,9 +1,9 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 using AutoMapper;
 using DataTransferObjects.Chat;
 using DataTransferObjects.Writing;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using OpenAI_API;
 using OpenAI_API.Chat;
 using OpenAI_API.Models;
@@ -12,14 +12,14 @@ namespace AiServices;
 
 public class AiService : IAiService
 {
-	private readonly IAiSettings _aiSettings;
+	private readonly AiSettings _aiSettings;
 	private readonly IMapper _mapper;
 	private readonly OpenAIAPI _openAIAPI;
 
-	public AiService(IAiSettings aiSettings, IMapper mapper) {
-		_aiSettings = aiSettings;
+	public AiService(IOptions<AiSettings> aiSettings, IMapper mapper) {
+		_aiSettings = aiSettings.Value;
 		_mapper = mapper;
-		const string apiKey = "sk-proj-pO9zCQYM8Lmpugon0cRwT3BlbkFJCcMn4ztRU8huzt8m8XvC"; // Test4
+		string apiKey = _aiSettings.SecretKey; // "sk-proj-pO9zCQYM8Lmpugon0cRwT3BlbkFJCcMn4ztRU8huzt8m8XvC"; // Test4
 		APIAuthentication auth = new(apiKey);
 		_openAIAPI = new(auth);
 	}
@@ -58,7 +58,7 @@ public class AiService : IAiService
 		var subject = GetTopic();
 		chat.AppendUserInput(string.Format(_aiSettings.CreateWritingTextSystemMessage, subject));
 		string response = chat.GetResponseFromChatbotAsync().GetAwaiter().GetResult();
-		TextForWriting? textForWriting = JsonSerializer.Deserialize<TextForWriting>(response)
+		TextForWriting? textForWriting = JsonSerializer.Deserialize<TextForWriting>(response.ReplaceLineEndings(" "))
 			?? throw new Exception("Something wrong");
 		topic = textForWriting.Topic;
 		text = textForWriting.Text;

@@ -9,8 +9,9 @@ public class StoryRepository : Repository<Story>, IStoryRepository
 	public StoryRepository(IUnitOfWork unitOfWork) : base(unitOfWork) {
 	}
 
-	public IEnumerable<Story> GetStories() {
+	public IEnumerable<Story> GetStories(string userId) {
 		var stories = Context.Stories
+			.Where(s => s.UserId == userId)
 			.Include(e => e.Paragraphs)
 			.OrderBy(essay => essay.Status)
 			.ThenByDescending(essay => essay.ModificationDate).ToList();

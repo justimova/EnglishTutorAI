@@ -11,7 +11,6 @@ import { Subject } from 'rxjs';
   styleUrls: ['./writing.component.scss']
 })
 export class WritingComponent implements OnInit {
-
   currentEssay: Essay;
   isCurrentEssayLoading: boolean = false;
   isCurrentEssayLoaded: boolean = false;
@@ -27,7 +26,7 @@ export class WritingComponent implements OnInit {
     this.safeRecommendation = this.sanitizer.bypassSecurityTrustHtml('');
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.isCurrentEssayLoading = true;
     this.essayService.getLastDraft().subscribe((response) => {
       if (response == null) {

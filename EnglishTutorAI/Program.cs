@@ -1,13 +1,14 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using BootstrapModule;
-using EnglishTutorAI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHostedService<DataInitializationService>();
+//builder.Services.AddHostedService<DataInitializationService>();
 
-builder.Services.AddAutoMapper();
+builder.Services.AddAutoMapper2();
 
 builder.Services.AddUnitOfWork(builder.Configuration);
 
@@ -18,20 +19,38 @@ builder.Services.AddControllers();
 builder.Services.AddAuthorization();
 
 builder.Services.AddUserIdentity();
-//builder.Services.AddIdentity<User, IdentityRole>()
+
+//  онфигураци€ аутентификации с использованием JWT
+builder.Services.AddAuthentication(options => {
+	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options => {
+	options.TokenValidationParameters = new TokenValidationParameters {
+		ValidateIssuer = true,
+		ValidateAudience = true,
+		ValidateLifetime = true,
+		ValidateIssuerSigningKey = true,
+		ValidIssuer = builder.Configuration["AuthSettings:Issuer"],
+		ValidAudience = builder.Configuration["AuthSettings:Audience"],
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AuthSettings:Key"]))
+	};
+});
+//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 //	.AddEntityFrameworkStores<ApplicationContext>();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-	.AddCookie(options => {
-		options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-		options.SlidingExpiration = true;
-		options.AccessDeniedPath = "/Forbidden/";
-	});
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//	.AddCookie(options => {
+//		options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+//		options.SlidingExpiration = true;
+//		options.AccessDeniedPath = "/Forbidden/";
+//	});
 builder.Services.AddSpaStaticFiles(configuration => {
 	configuration.RootPath = "ClientApp/dist";
 });
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddInfrastrucureServices(builder.Configuration);
 builder.Services.AddDomainServices();
 builder.Services.AddAiServices(builder.Configuration);
 
@@ -90,7 +109,7 @@ app.UseEndpoints(endpoints => {
 
 //app.MapGet("/api/users/{id:string}", async (string id, ApplicationContext db) => {
 //	// получаем пользовател€ по id
-//	User? user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
+//	ApplicationUser? user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
 
 //	// если не найден, отправл€ем статусный код и сообщение об ошибке
 //	if (user == null)
@@ -102,7 +121,7 @@ app.UseEndpoints(endpoints => {
 
 //app.MapDelete("/api/users/{id:string}", async (string id, ApplicationContext db) => {
 //	// получаем пользовател€ по id
-//	User? user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
+//	ApplicationUser? user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
 
 //	// если не найден, отправл€ем статусный код и сообщение об ошибке
 //	if (user == null)
@@ -114,14 +133,14 @@ app.UseEndpoints(endpoints => {
 //	return Results.Json(user);
 //});
 
-//app.MapPost("/api/users", async (User user, ApplicationContext db) => {
+//app.MapPost("/api/users", async (ApplicationUser user, ApplicationContext db) => {
 //	// добавл€ем пользовател€ в массив
 //	await db.Users.AddAsync(user);
 //	await db.SaveChangesAsync();
 //	return user;
 //});
 
-//app.MapPut("/api/users", async (User userData, ApplicationContext db) => {
+//app.MapPut("/api/users", async (ApplicationUser userData, ApplicationContext db) => {
 //	// получаем пользовател€ по id
 //	var user = await db.Users.FirstOrDefaultAsync(u => u.Id == userData.Id);
 

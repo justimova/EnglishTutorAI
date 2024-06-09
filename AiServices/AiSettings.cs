@@ -1,18 +1,18 @@
 ﻿namespace AiServices;
 
-public interface IAiSettings {
-	int NumberOfWordsForReadingText { get; set; }
+//public interface IAiSettings {
+//	int NumberOfWordsForReadingText { get; set; }
 
-	string CreateWritingTextSystemMessage { get; set; }
-    string CreateWritingTextUserMessage { get; set; }
-	string GetRecommendationWritingTextSystemMessage { get; set; }
-	string GetTopicSystemMessage { get; set; }
-	string GetTopicUserMessage { get; set; }
-	string CreateReadingTextSystemMessage { get; set; }
-	string CreateReadingTextUserMessage { get; set; }
-}
+//	string CreateWritingTextSystemMessage { get; set; }
+//    string CreateWritingTextUserMessage { get; set; }
+//	string GetRecommendationWritingTextSystemMessage { get; set; }
+//	string GetTopicSystemMessage { get; set; }
+//	string GetTopicUserMessage { get; set; }
+//	string CreateReadingTextSystemMessage { get; set; }
+//	string CreateReadingTextUserMessage { get; set; }
+//}
 
-public class AiSettings : IAiSettings
+public class AiSettings// : IAiSettings
 {
 	private static readonly int _defaultNumberOfWordsForReadingText = 2000;
 	private int _numberOfWordsForReadingText = 0;
@@ -31,4 +31,5 @@ public class AiSettings : IAiSettings
     public string GetTopicUserMessage { get; set; } = string.Empty;
     public string CreateReadingTextSystemMessage { get; set; } = string.Empty;
     public string CreateReadingTextUserMessage { get; set; } = string.Empty;
+    public string SecretKey { get; set; } = string.Empty;
 }

@@ -7,9 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AiServices\AiServices.csproj" />
     <ProjectReference Include="..\DomainServices.Interfaces\DomainServices.Interfaces.csproj" />
     <ProjectReference Include="..\DomainServices\DomainServices.csproj" />
+    <ProjectReference Include="..\Infrastructure.Interfaces\InfrastructureService.Interfaces.csproj" />
+    <ProjectReference Include="..\InfrastructureService\InfrastructureService.csproj" />
     <ProjectReference Include="..\UnitOfWork.Interfaces\UnitOfWork.Interfaces.csproj" />
     <ProjectReference Include="..\UnitOfWork\UnitOfWork.csproj" />
   </ItemGroup>

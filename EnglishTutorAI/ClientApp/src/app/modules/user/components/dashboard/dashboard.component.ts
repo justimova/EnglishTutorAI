@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BriefStatistic } from '../../models/brief-statistic';
+import { StoryService } from '../../services/story.service';
+import { EssayService } from '../../services/essay.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,12 +19,19 @@ export class DashboardComponent implements OnInit
     return differentTime != 0;
   }
 
+  constructor(private storyService: StoryService, private essayService: EssayService) {    
+  }
+
   ngOnInit() {
     this.briefStatistics = [
-      { title: 'Texts Read', spentTime: 50, differentTime: 2 },
-      { title: 'Essays Written', spentTime: 35, differentTime: -8 },
-      { title: 'Grammar Rules Learned', spentTime: 50, differentTime: 0 },
-      { title: 'Grammar Exercises', spentTime: 108, differentTime: 20 },
+      { code: 'reading', title: 'You\'ve already read texts:', spentTime: 0, icon: 'fa-book', color: 'text-info' },
+      { code: 'writing', title: 'You\'ve already written essays:', spentTime: 0, icon: 'fa-pencil', color: 'text-warning' }
     ];
+    this.storyService.getDoneStoryCount().subscribe(response => {
+      this.briefStatistics[0].spentTime = response;
+    });
+    this.essayService.getDoneEssayCount().subscribe(response => {
+      this.briefStatistics[1].spentTime = response;
+    });
   }
 }

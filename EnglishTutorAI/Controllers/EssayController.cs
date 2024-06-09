@@ -1,11 +1,14 @@
 ﻿using DataTransferObjects.Writing;
+using DomainServices;
 using DomainServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishTutorAI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class EssayController : ControllerBase
 {
 	private readonly IEssayService _essayService;
@@ -19,6 +22,13 @@ public class EssayController : ControllerBase
 	public ActionResult<IEnumerable<EssayDto>> Get() {
 		var essayDtos = _essayService.GetEssays();
 		return Ok(essayDtos);
+	}
+
+	[HttpGet]
+	[Route("getDoneEssayCount")]
+	public ActionResult<int> GetDoneEssayCount() {
+		int count = _essayService.GetDoneEssayCount();
+		return Ok(count);
 	}
 
 	//// GET api/<EssayController>/5

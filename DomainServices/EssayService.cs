@@ -5,7 +5,7 @@ using DataTransferObjects.Writing;
 using DomainServices.Interfaces;
 using UnitOfWork.Interfaces;
 using DbModels;
-using System.Collections.Generic;
+using InfrastructureService.Interfaces;
 
 namespace DomainServices;
 
@@ -14,18 +14,26 @@ public class EssayService : UnitOfWorkService, IEssayService
 	private readonly IMapper _mapper;
 	private readonly IEssayRepository _essayRepository;
 	private readonly IAiService _aiService;
+	private readonly IUserService _userService;
+	private readonly ILanguageLevelService _languageLevelService;
 
 	public EssayService(IUnitOfWork unitOfWork,
 			IMapper mapper,
 			IEssayRepository essayRepository,
-			IAiService aiService) : base(unitOfWork) {
+			IAiService aiService,
+			IUserService userService,
+			ILanguageLevelService languageLevelService) : base(unitOfWork) {
 		_mapper = mapper;
 		_essayRepository = essayRepository;
 		_aiService = aiService;
+		_userService = userService;
+		_languageLevelService = languageLevelService;
 	}
 
 	public EssayDto GetLastDraftEssay() {
+		var currentUser = _userService.GetCurrentUser();
 		var essays = _essayRepository.GetAll()
+			.Where(e => e.UserId == currentUser.Id)
 			.OrderBy(essay => essay.Status)
 			.ThenByDescending(essay => essay.ModificationDate);
 		var essay = essays.FirstOrDefault(essay => essay.Status == (int)EssayStatus.Draft);
@@ -33,14 +41,18 @@ public class EssayService : UnitOfWorkService, IEssayService
 	}
 
 	public EssayDto CreateEssay(EssayDto essayDto) {
-		IList<AiMessageDto> aiMessageDtos = _aiService.CreateTextForWriting("A2", out string title, out string text)
-			?? throw new Exception("Something wrong");
+		var currentUser = _userService.GetCurrentUser();
+		var languageLevel = _languageLevelService.GetLanguageLevelById(currentUser.LanguageLevelId);
+		IList<AiMessageDto> aiMessageDtos = _aiService.CreateTextForWriting(languageLevel.Code,
+				out string title, out string text)
+			?? throw new Exception("Creation failed");
 		essayDto.Title = title;
 		essayDto.SourceText = text;
 		var now = DateTime.Now;
 		essayDto.CreationDate = now;
 		essayDto.ModificationDate = now;
 		Essay? essay = _mapper.Map<Essay>(essayDto);
+		essay.UserId = currentUser.Id;
 		essay.AiMessages = aiMessageDtos.Select(x => _mapper.Map<AiMessage>(x)).ToList();
 		_essayRepository.Add(essay);
 		UnitOfWork.SaveChanges();
@@ -49,10 +61,8 @@ public class EssayService : UnitOfWorkService, IEssayService
 	}
 
 	public EssayDto SaveEssay(int essayId, string translatedText) {
-		Essay? essay = _essayRepository.GetEssayWithAiMessages(essayId);
-		if (essay == null) {
-			throw new Exception("Essay doesn't exist");
-		}
+		Essay? essay = _essayRepository.GetEssayWithAiMessages(essayId)
+			?? throw new Exception("Essay doesn't exist");
 		essay.TranslatedText = translatedText;
 		IList<AiMessageDto> chatMessageDtos = essay.AiMessages.OrderBy(x => x.Order).Select(aiMessage =>
 			_mapper.Map<AiMessageDto>(aiMessage)).ToList();
@@ -70,18 +80,25 @@ public class EssayService : UnitOfWorkService, IEssayService
 	}
 
 	public IEnumerable<EssayDto> GetEssays() {
+		var currentUser = _userService.GetCurrentUser();
 		IOrderedQueryable<Essay> essays = _essayRepository.GetAll()
+			.Where(e => e.UserId == currentUser.Id)
 			.OrderBy(essay => essay.Status)
 			.ThenByDescending(essay => essay.ModificationDate);
 		return essays.Select(essay => _mapper.Map<EssayDto>(essay)).ToList();
 	}
 
 	public void DeleteEssay(int essayId) {
-		var essay = _essayRepository.GetFirstOrDefault(x => x.EssayId == essayId);
-		if (essay == null) {
-			throw new Exception("Something wrong");
-		}
+		var essay = _essayRepository.GetFirstOrDefault(x => x.EssayId == essayId) 
+			?? throw new Exception("Deletion failed");
 		_essayRepository.Delete(essay);
 		UnitOfWork.SaveChanges();
+	}
+
+	public int GetDoneEssayCount() {
+		var currentUser = _userService.GetCurrentUser();
+		var essays = _essayRepository.GetAll()
+			.Where(s => s.UserId == currentUser.Id && s.Status == EssayStatus.Done);
+		return essays.Count();
 	}
 }

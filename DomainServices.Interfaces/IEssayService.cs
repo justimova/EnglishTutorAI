@@ -9,4 +9,5 @@ public interface IEssayService
 	IEnumerable<EssayDto> GetEssays();
 	EssayDto SaveEssay(int essayId, string translatedText);
 	EssayDto GetLastDraftEssay();
+	int GetDoneEssayCount();
 }

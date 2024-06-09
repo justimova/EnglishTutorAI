@@ -13,7 +13,7 @@ import { BriefStatisticsComponent } from './components/brief-statistics/brief-st
 import { SharedModule } from '../shared/shared.module';
 import { WritingComponent } from './components/writing/writing.component';
 import { EssayService } from './services/essay.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { EssayDataGridComponent } from './components/essay-data-grid/essay-data-grid.component';
 import { ReadingComponent } from './components/reading/reading.component';
@@ -27,6 +27,9 @@ import { GrammarComponent } from './components/grammar/grammar.component';
 import { GrammarTopicService } from './services/grammar-topic.service';
 import { EditorModule } from 'primeng/editor';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { UserJwtInterceptor } from 'src/app/interceptors/user.jwt.interceptor';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { AccountService } from './services/account.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     DictionaryComponent,
     DictionaryViewComponent,
     DictionaryEditComponent,
-    GrammarComponent
+    GrammarComponent,
+    UserProfileComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +64,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     EssayService,
     StoryService,
     DictionaryService,
-    GrammarTopicService
+    GrammarTopicService,
+    AccountService,
+    { provide: HTTP_INTERCEPTORS, useClass: UserJwtInterceptor, multi: true }
   ]
 })
 export class UserModule { }

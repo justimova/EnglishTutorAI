@@ -19,7 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootstrapModule", "Bootstra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AiServices", "AiServices\AiServices.csproj", "{EC43884B-62FB-4A37-9743-3DA00389F405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbModels", "DbModels\DbModels.csproj", "{AB9268E2-643B-4EC0-A130-FF7AD96EB97B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbModels", "DbModels\DbModels.csproj", "{AB9268E2-643B-4EC0-A130-FF7AD96EB97B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureService.Interfaces", "Infrastructure.Interfaces\InfrastructureService.Interfaces.csproj", "{E68DC4EA-316C-4300-B9C0-6017E6C5AD61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureService", "InfrastructureService\InfrastructureService.csproj", "{7435A7FE-CC81-4D45-B644-65A0B7924665}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{AB9268E2-643B-4EC0-A130-FF7AD96EB97B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB9268E2-643B-4EC0-A130-FF7AD96EB97B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB9268E2-643B-4EC0-A130-FF7AD96EB97B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E68DC4EA-316C-4300-B9C0-6017E6C5AD61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E68DC4EA-316C-4300-B9C0-6017E6C5AD61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E68DC4EA-316C-4300-B9C0-6017E6C5AD61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E68DC4EA-316C-4300-B9C0-6017E6C5AD61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7435A7FE-CC81-4D45-B644-65A0B7924665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7435A7FE-CC81-4D45-B644-65A0B7924665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7435A7FE-CC81-4D45-B644-65A0B7924665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7435A7FE-CC81-4D45-B644-65A0B7924665}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

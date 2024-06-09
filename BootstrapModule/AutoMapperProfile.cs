@@ -7,6 +7,7 @@ using DataTransferObjects.Reading;
 using DataTransferObjects.Dictionary;
 using DataTransferObjects.Grammar;
 using DataTransferObjects;
+using DataTransferObjects.User;
 
 namespace BootstrapModule;
 
@@ -23,6 +24,7 @@ internal class AutoMapperProfile : Profile
 		CreateMap<Dictionary, DictionaryDto>().ReverseMap();
 		CreateMap<GrammarTopic, GrammarTopicDto>().ReverseMap();
 		CreateMap<LanguageLevel, LanguageLevelDto>().ReverseMap();
+		CreateMap<ApplicationUser, UserDto>().ReverseMap();
 	}
 
 }

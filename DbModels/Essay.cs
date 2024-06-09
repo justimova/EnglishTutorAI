@@ -25,6 +25,9 @@ public class Essay
 	public string? TranslatedText { get; set; } = string.Empty;
 	public string? Recommendation { get; set; } = string.Empty;
 	public ICollection<AiMessage> AiMessages { get; set; }
+	[Required]
+	public string UserId { get; set; }
+	public ApplicationUser User { get; set; }
 
 }
 

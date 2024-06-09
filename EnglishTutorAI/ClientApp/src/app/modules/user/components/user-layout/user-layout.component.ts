@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserMenuItemsService } from '../../services/user-menu-items.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-user-layout',
@@ -15,6 +16,15 @@ export class UserLayoutComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.initRoute();
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.initRoute();
+    });
+  }
+
+  private initRoute() {
     const currentRoute = this.router.url;
     this.title = this.userMenuItemsService.getTitleByRoute(currentRoute);
   }

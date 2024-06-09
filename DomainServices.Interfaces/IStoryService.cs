@@ -9,4 +9,5 @@ public interface IStoryService
 	StoryDto? GetLastUnreadStory();
 	StoryDto SetStoryStatus(int storyId, int storyStatus);
 	void DeleteStory(int storyId);
+	int GetDoneStoryCount();
 }
